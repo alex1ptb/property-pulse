@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { fetchProperty } from "@/utils/request";
+import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 
 const PropertyPage = () => {
   const { id } = useParams();
@@ -27,7 +28,23 @@ const PropertyPage = () => {
     }
   }, [id, property]);
 
-  return <div>PropertyPage</div>;
+  if (!property && !loading) {
+    return (
+      <h1 className="text-center text-2xl font-bold mt-10">
+        Property not found
+      </h1>
+    );
+  }
+
+  return (
+    <>
+      {!loading && property && (
+        <>
+          <PropertyHeaderImage image={property.images[0]} />
+        </>
+      )}
+    </>
+  );
 };
 
 export default PropertyPage;
